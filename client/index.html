@@ -1,22 +1,3 @@
-<?php
-  // session_start();
-  // if ($_SESSION && $_SESSION['user']){
-  //   //user already logged in
-  //   header('Location: /dashboard.php');
-  // }
-
-  $message = "";
-  if(!empty($_REQUEST['status'])) {
-    switch($_REQUEST['status']) {
-      case 'login':
-        $message = 'User does not exists';
-      break;
-      case 'error':
-        $message = 'There was a problem inserting the user';
-      break;
-    }
-  }
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,8 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="css/login.css">-->
 
     <title>Inicio de sesion</title>
 </head>
@@ -39,7 +21,7 @@
 
             <div class="navbar-header ">
                 <a class="navbar-brand" rel="home" href="#" title="Buy Sell Rent Everyting">
-                    <img style="max-width:300px; margin-top: -50px;" src="img/logo.jpg">
+                    <!--<img style="max-width:300px; margin-top: -50px;" src="img/logo.jpg">-->
                 </a>
             </div>
 
@@ -54,56 +36,36 @@
 
     <div class="container">
         <div class="msg">
-            <?php echo $message; ?>
         </div>
         <h1>User Login</h1>
         <hr id="hr3">
-        <form action="logica.php" method="POST" class="form-inline" role="form">
+        <form method="POST" class="form-inline" role="form">
             <div class="form-group">
                 <label class="sr-only" for="">Username</label>
-                <input type="text" class="form-control" id="" name="username" placeholder="Your username">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Your username">
             </div>
-            <br><br><br>
             <div class="form-group">
                 <label class="sr-only" for="">Password</label>
-                <input type="password" class="form-control" id="" name="password" placeholder="Your password">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Your password">
             </div>
             <hr id="hr3">
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary" onclick="login()">Login</button>
             <p>If you don't have an account,
                 <a href="registro.php" title="registro">Sign Up Here</a>
             </p>
         </form>
     </div>
     <footer>
-           <!-- <hr id="hr3">
-            <div class="contenedor-footer">
-                <div class="content-foo">
-                    <h4>My Cover</h4>
-                </div>
-                <div class="content-fo">
-                    <h4>|</h4>
-                </div>
-                <div class="content-foo">
-                    <h4>About</h4>
-                </div>
-                <div class="content-fo">
-                    <h4>|</h4>
-                </div>
-                <div class="content-foo">
-                    <h4>Help</h4>
-                </div>
-            </div>
-            <h2 class="titulo-final"> <strong> &copy;</strong> My News Cover</h2>-->
     <nav class="navbar navbar-default  navbar-fixed-bottom" role="navigation">
         <div class="container text-center">
             <div class="content-fooa">
                 <h4> <a href="">My Cover</a> | <a href="">About</a> | <a href="">Help</a></h4>
             </div>
-            <p class="navbar-text col-md-12 col-sm-12 col-xs-12">&copy; My News Cover by Geberth Daniel Alfaro Sequeira</p>
+            <p class="navbar-text col-md-12 col-sm-12 col-xs-12">&copy; My News Cover</p>
         </div>
     </nav>
     </footer>
+    <script type="text/javascript" src="js/login.js"></script>
 </body>
 
 </html>
