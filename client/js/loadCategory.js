@@ -25,7 +25,7 @@ function renderCourses(Categories) {
           <tr>
             <td>${category.nameCategory}</td>
             <td>
-              <button onclick="get('${category._id}')" type="button" class="btn btn-success">Edit</button>
+            <a href="editCateg.html?id=${category._id}"><button type="button" class="btn btn-success">Edit</button></a>
               <button onclick="deleteCategory('${category._id}')" type="button" class="btn btn-danger">Delete</button>
             </td>
           </tr>
@@ -35,38 +35,11 @@ function renderCourses(Categories) {
     document.getElementById('tableList').innerHTML = html;
   }
 
-  /**
-   * Generates an HTML table with tasks
-   */
-  function renderCourse(category) {
-    window.location.href = "addCategories.html";
-    document.getElementById("Category").value = category.nameCategory;
-
-    const html = `<button onclick="editCategory('${category._id}')" type="button" class="btn btn-success">Edit</button>`
-
-    document.getElementById('saves').innerHTML = html;
-    document.getElementById("save").style.visibility = "hidden";
-  }
-
   function deleteCategory(id) {
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("error", error);
     ajaxRequest.open("DELETE", `http://localhost:3000/api/categories?id=${id}`);
     ajaxRequest.send();
-    location.reload();
-  }
-
-  function editCategory(id) {
-    const ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.addEventListener("error", error);
-    ajaxRequest.open("PUT", `http://localhost:3000/api/categories?id=${id}`);
-    const data = {
-      'nameCategory': document.getElementById('Category').value
-    };
-    console.log(data)
-    ajaxRequest.setRequestHeader("Content-Type", "application/json");
-    const enviar = ajaxRequest.send(JSON.stringify(data));
-    console.log(enviar)
     location.reload();
   }
 
