@@ -1,16 +1,3 @@
-<?php
-session_start();
-
-$user = $_SESSION['user'];
-
-if($user == null){
-  header("Location: index.php");
-}
-
-
-require 'logica/sources.php';
-
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -38,7 +25,6 @@ require 'logica/sources.php';
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 90px;">
-                        <?php echo $user['first_name'];?>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="logica/cerrarSesion.php">Logout</a>
@@ -61,19 +47,14 @@ require 'logica/sources.php';
                 </tr>
             </thead>
             <tbody>
-            <?php
-                foreach ($query as $row){?>
                         <tr>
-                            <td><?php echo ($row['nameN']);?></td>
-                            <td><?php echo ($row['names']);?></td>
+                            <td><!--<?php echo ($row['nameN']);?>--></td>
+                            <td><!--<?php echo ($row['names']);?>--></td>
                             <td><a href="editnews.php?id=<?php echo $row['id'] ?>"><button type='button' class='btn btn-success'>Edit</button></a>  <a href="logica/eliminarNews.php?id=<?php echo $row['id'] ?>"><button type='button' class='btn btn-danger'>Delete</button></a></td>
                         </tr>
                     </tbody>
-                    <?php
-                }
-                ?>
         </table>
-        <form action="addnews.php">
+        <form action="addnews.html">
         <button type="submit" class="btn btn-primary">Add New</button>
         </form>
     </div>

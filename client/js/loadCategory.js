@@ -10,7 +10,13 @@ function saveCategory() {
       'nameCategory': document.getElementById('Category').value
   };
   const enviar = ajaxRequest.send(JSON.stringify(data));
-}   
+  alert();
+  redireccionar();
+}
+
+function redireccionar(){
+    window.location.href = "crudCategories.html"
+}
 
 function renderCourses(Categories) {
     let html = `<table class="table table-responsive table-bordered">
