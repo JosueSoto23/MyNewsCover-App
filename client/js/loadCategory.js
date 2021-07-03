@@ -10,8 +10,6 @@ function saveCategory() {
       'nameCategory': document.getElementById('Category').value
   };
   const enviar = ajaxRequest.send(JSON.stringify(data));
-  alert();
-  redireccionar();
 }
 
 function redireccionar(){
