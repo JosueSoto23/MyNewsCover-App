@@ -13,7 +13,7 @@ function renderCourses(sources) {
         <tbody>
           <tr>
             <td>${source.nameSource}</td>
-            <td>${source.categoryID}</td>
+            <td id="cat">${getCategories(source.categoryID)}</td>
             <a href="editCateg.html?id=${source._id}"><button type="button" class="btn btn-success">Edit</button></a>
               <button onclick="deletesource('${source._id}')" type="button" class="btn btn-danger">Delete</button>
             </td>
@@ -53,11 +53,6 @@ function renderCourses(sources) {
     ajaxRequest.open("GET", url);
     ajaxRequest.setRequestHeader("Content-Type", "application/json");
     ajaxRequest.send();
-
-    /*ajaxRequests.addEventListener("error", error);
-    ajaxRequests.open("GET", url);
-    ajaxRequests.setRequestHeader("Content-Type", "application/json");
-    ajaxRequests.send();*/
   }
 
   get();
@@ -65,19 +60,16 @@ function renderCourses(sources) {
   /**
      *  Get on or all
      */
-   /*function get(id) {
+   function getCategories(id) {
     let url = "http://localhost:3000/api/categories";
     if (id) {
       url = `${url}?id=${id}`;
     }
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("load", (response) => {
-      const categories = JSON.parse(response.target.responseText);
-      if (id) {
-        renderCourse(categories);
-      } else {
-        renderCourses(categories);
-      }
+        const categories = JSON.parse(response.target.responseText);
+        alert(categories.nameCategory)
+        return categories.nameCategory
     });
     ajaxRequest.addEventListener("error", error);
     ajaxRequest.open("GET", url);
@@ -85,4 +77,6 @@ function renderCourses(sources) {
     ajaxRequest.send();
   }
 
-  get();*/
+  var toType = function(obj) {
+    return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase()
+  }
