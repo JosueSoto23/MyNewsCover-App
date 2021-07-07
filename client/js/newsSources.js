@@ -13,8 +13,8 @@ function renderCourses(sources) {
         <tbody>
           <tr>
             <td>${source.nameSource}</td>
-            <td id="cat">${getCategories(source.categoryID)}</td>
-            <a href="editCateg.html?id=${source._id}"><button type="button" class="btn btn-success">Edit</button></a>
+            <td id="cat">${source.categoryID}</td>
+            <a href="editnews.html?id=${source._id}&nameSource=${source.nameSource}&url=${source.url}&categoryID=${source.categoryID}&userID=${"1"}"><button type="button" class="btn btn-success">Edit</button></a>
               <button onclick="deletesource('${source._id}')" type="button" class="btn btn-danger">Delete</button>
             </td>
           </tr>
@@ -27,7 +27,7 @@ function renderCourses(sources) {
   function deletesource(id) {
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("error", error);
-    ajaxRequest.open("DELETE", `http://localhost:3000/api/sources?id=${id}`);
+    ajaxRequest.open("DELETE", `http://localhost:3000/api/newsSources?id=${id}`);
     ajaxRequest.send();
     location.reload();
   }
@@ -67,9 +67,12 @@ function renderCourses(sources) {
     }
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("load", (response) => {
-        const categories = JSON.parse(response.target.responseText);
-        alert(categories.nameCategory)
-        return categories.nameCategory
+      const taskResponse = JSON.parse(response.target.responseText);
+      if (id) {
+        renderCourse(taskResponse);
+      } else {
+        renderCourses(taskResponse);
+      }
     });
     ajaxRequest.addEventListener("error", error);
     ajaxRequest.open("GET", url);
