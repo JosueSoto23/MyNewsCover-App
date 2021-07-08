@@ -72,10 +72,8 @@ function editSource(id) {
     'categoryID': document.getElementById('category').value,
     'userID': "1"
   };
-  console.log(ajaxRequest.send(JSON.stringify(data)));
-  console.log(data);
-  //ajaxRequest.setRequestHeader("Content-Type", "application/json");
-  //ajaxRequest.send(JSON.stringify(data));
+  ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.send(JSON.stringify(data));
 
   window.location.href = "../crudCategories.html"
 }
