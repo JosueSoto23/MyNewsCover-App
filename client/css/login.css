@@ -1,0 +1,261 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 12px;
+    color: #606060;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.asd {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+nav {
+    text-align: right;
+    padding: 30px 0px 0 0;
+    
+}
+
+
+
+nav>a {
+    color: rgb(19, 18, 18);
+    font-weight: 300;
+    font-size: 11px;
+    text-decoration: none;
+    margin-right: 18px;
+    width: auto;
+
+    text-decoration: none;
+    padding: 4px;
+    font-weight: 10;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: #0d0d0e;
+    border-radius: 4px;
+    border: 2px solid #111111;
+}
+
+.camba {
+    margin-left: 50px;
+    margin-top: 10px;
+    width: 200px;
+    height: 60px;
+    margin-right: 350px;
+}
+
+.portada {
+    display: table;
+    float: left;
+}
+
+/* Header */
+
+.textos-header {
+    width: 100%;
+    height: 190px;
+    background: #c5c4c5;
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+main .textos-header>h1 {
+    padding: 100px 0 4px 0;
+    text-align: center;
+    font-size: 16px;
+    font-weight: Bold;
+}
+
+main .textos-header {
+    text-align: center;
+}
+
+#hr4 {
+    height: 1px;
+    width: 20%;
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(16, 16, 17);
+}
+
+main .user {
+    padding: 4px 0 0px 0;
+    text-align: center;
+}
+
+main .pass {
+    padding: 20px 0 20px 0;
+    text-align: center;
+}
+
+main .button {
+    padding: 4px 0 20px 0;
+    text-align: center;
+    font-size: 11px;
+}
+
+main .button>p {
+    padding: 10px 0 50px 0;
+    text-align: center;
+    font-size: 15px;
+}
+
+#hr2 {
+    height: 1px;
+    width: 27%;
+    display: inline-block;
+    background-color: black;
+}
+
+#hr3 {
+    height: 1px;
+    width: 100%;
+    display: inline-block;
+    background-color: black;
+}
+
+.button-login {
+    text-decoration: none;
+    padding: 4px;
+    height: 40px;
+    width: auto;
+    font-weight: 100;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: #333333;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.login {
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: #333333;
+    border-radius: 6px;
+    border: 2px solid #333333;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.cancel {
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: #808080;
+    border-radius: 6px;
+    border: 2px solid #808080;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.button-cancel {
+    text-decoration: none;
+    padding: 4px;
+    height: 40px;
+    width: auto;
+    font-weight: 100;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: #808080;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.carrito {
+    text-decoration: none;
+    padding: 4px;
+    font-weight: 10;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: #0d0d0e;
+    border-radius: 4px;
+    border: 2px solid #111111;
+}
+
+.required {
+    width: auto;
+    height: 40px;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.contenedor-footer {
+    display: flex;
+    width: 20%;
+    justify-content: space-evenly;
+    margin: auto;
+    padding-top: 10px;
+}
+
+.content-foo {
+    text-align: center;
+}
+
+.content-foo h4 {
+    color: rgb(15, 15, 15);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.content-foo p {
+    color: #ccc;
+}
+
+.titulo-final {
+    text-align: center;
+    font-size: 14px;
+    margin: 20px 0 0 0;
+    color: #9e9797;
+    padding-bottom: 10px;
+}
+
+
+
+
+@media (min-width:320px) {
+    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+    table, p, img {
+        padding-right: 1em;
+        width: 100%;
+    }
+}
+
+@media (max-width:480px) {
+    /* smartphones, Android phones, landscape iPhone */
+}
+
+@media (min-width:600px) {
+    /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+}
+
+@media screen and (max-width: 768px) {
+    /*body {
+        background: black;
+    }*/
+}
+
+@media (min-width:801px) {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+
+@media (min-width:1025px) {
+    /* big landscape tablets, laptops, and desktops */
+}
+
+@media (min-width:1281px) {
+    /* hi-res laptops and desktops */
+}
