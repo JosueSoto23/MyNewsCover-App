@@ -81,3 +81,5 @@ function login(id) {
     ajaxRequest.setRequestHeader("Content-Type", "application/json");
     ajaxRequest.send();
 }
+
+login();
