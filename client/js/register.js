@@ -11,13 +11,13 @@ function saveCourse() {
         'lastName': document.getElementById('LastName').value,
         'email': document.getElementById('Email').value,
         'password': document.getElementById('Password').value,
-        'Address1': document.getElementById('Address').value,
+        'Address': document.getElementById('Address').value,
         'Address2': document.getElementById('Address2').value,
         'country': document.getElementById('pais').value,
         'city': document.getElementById('city').value,
         'postalCode': document.getElementById('PostalCode').value,
         'phoneNumber': document.getElementById('Phone').value,
-        'role': "2"
+        'role': "admin"
     };
     const enviar = ajaxRequest.send(JSON.stringify(data));
 }
