@@ -16,7 +16,8 @@ function saveCourse() {
         'country': document.getElementById('pais').value,
         'city': document.getElementById('city').value,
         'postalCode': document.getElementById('PostalCode').value,
-        'phoneNumber': document.getElementById('Phone').value
+        'phoneNumber': document.getElementById('Phone').value,
+        'role': "2"
     };
     const enviar = ajaxRequest.send(JSON.stringify(data));
 }
@@ -46,7 +47,5 @@ function login(id) {
     ajaxRequest.send();
 }
 
-$(window).load(function () {
-    $(".loader").fadeOut("slow");
-});
+
 
