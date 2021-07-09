@@ -6,75 +6,32 @@ $(window).load(function () {
     $(".loader").fadeOut("slow");
 });
 
-function logins(id) {
+function renderCourses() {
+    let html = `<button id="button" type="submit" class="btn btn-primary" onclick="login()">Login</button>`;
+    document.getElementById('button').innerHTML = html;
+}
+
+function login() {
+
     let url = "http://localhost:3000/api/users";
-    if (id) {
-        url = `${url}?id=${id}`;
-    }
+
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("load", (response) => {
         const userResponse = JSON.parse(response.target.responseText);
-        //listUsers.push(userResponse);
-    });
-    ajaxRequest.addEventListener("error", error);
-    ajaxRequest.open("GET", url);
-    ajaxRequest.setRequestHeader("Content-Type", "application/json");
-    ajaxRequest.send();
-}
-/*login();*/
-/*console.log(listUsers);
-for (let variable of listUsers[0].user) {
-    console.log(variable);
-}*/
+        
+        var email = document.getElementById("username").value;
+        var pass = document.getElementById("password").value;
 
-function validarCredenciales(email, password) {
-    var bAcceso = false;
-    ///for (let i = 0; i < listUsers.length; i++) {
-        console.log(listUsers[i].email);
-        /*if (email == user[i].email && password == user[i].password) {
-            bAcceso = true;
-            alert("Bienvenido");
-        }*/
-    //}
-    for (let variable of listUsers[0].userResponse) {
-        console.log(variable);
-    }
-    return bAcceso;
-}
+        console.log(userResponse);
 
-function iniciarSesion() {
-    var bAcceso = false;
-    var email = document.getElementById('username').value;
-    var password = document.getElementById("password").value;
-
-    bAcceso = validarCredenciales(email, password);
-    //  console.log(bAcceso);
-
-    /*if (bAcceso == true) {
-        window.location.href = "./dashboard.html";
-    } else {
-        alert("Sus credenciales son invalidas")
-    }*/
-}
-
-function login(id) {
-    let url = "http://localhost:3000/api/users";
-    if (id) {
-        url = `${url}?id=${id}`;
-    }
-    const ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.addEventListener("load", (response) => {
-        const userResponse = JSON.parse(response.target.responseText);
-        console.log(userResponse)
-        for (let i = 0; i < userResponse.length; i++) {
-            if (userResponse[i].email == document.getElementById('username').value
-                && userResponse[i].password == document.getElementById("password").value) {
+        /*for (let i = 0; i < userResponse.length; i++) {
+            console.log(userResponse);
+            if (userResponse[0].email == email && userResponse[0].password == pass) {
                 window.location.href = "dashboard.html";
             } else {
-                alert("Credenciales invalidoss");
+                //alert("Credenciales invalidos");
             }
-        }
-
+        }*/
     });
     ajaxRequest.addEventListener("error", error);
     ajaxRequest.open("GET", url);
