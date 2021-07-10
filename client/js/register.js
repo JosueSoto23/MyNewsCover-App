@@ -11,8 +11,6 @@ function saveCourse() {
         'lastName': document.getElementById('LastName').value,
         'email': document.getElementById('Email').value,
         'password': document.getElementById('Password').value,
-        'Address': document.getElementById('Address').value,
-        'Address2': document.getElementById('Address2').value,
         'country': document.getElementById('pais').value,
         'city': document.getElementById('city').value,
         'postalCode': document.getElementById('PostalCode').value,
