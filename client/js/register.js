@@ -15,7 +15,7 @@ function saveCourse() {
         'city': document.getElementById('city').value,
         'postalCode': document.getElementById('PostalCode').value,
         'phoneNumber': document.getElementById('Phone').value,
-        'role': "admin"
+        'role': "user"
     };
     const enviar = ajaxRequest.send(JSON.stringify(data));
 }

@@ -70,7 +70,7 @@ function editSource(id) {
     'url': document.getElementById('url').value,
     'nameSource': document.getElementById('name').value,
     'categoryID': document.getElementById('category').value,
-    'userID': "1"
+    'userID': user_id
   };
   ajaxRequest.setRequestHeader("Content-Type", "application/json");
   ajaxRequest.send(JSON.stringify(data));
