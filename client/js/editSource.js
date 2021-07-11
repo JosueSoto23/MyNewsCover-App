@@ -1,17 +1,36 @@
 let url_string = window.location.href;
 let url = new URL(url_string);
 let newID = url.searchParams.get("id");
-let name = url.searchParams.get("nameSource");
-let link = url.searchParams.get("url");
-let category_ID = url.searchParams.get("categoryID");
-let user_id = url.searchParams.get("userID");
-
-/*let boton = document.getElementById("boton");
-
-document.getElementById("noticias").href = `Noticias.html?id=${idUsuario}`
-document.getElementById("categorias").href = `Categorias.html?id=${idUsuario}`*/
+let usuario = sessionStorage.getItem("usuarioActivo");
 
 const error = (e) => console.log(e.target.responseText);
+
+function getUser(id) {
+  let url = "http://localhost:3000/api/users";
+  if (id) {
+    url = `${url}?id=${id}`;
+  }
+  let ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("load", (response) => {
+    const userResponse = JSON.parse(response.target.responseText);
+    let html = "";
+    html += `<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 90px;"><img class="icon" src="Images/user_50px.png" alt="x" />
+        ${userResponse.firstName} </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="index.html">Logout</a>
+        <a class="dropdown-item" href="crudNewsSources.html">News Sources</a>`;
+    if (userResponse.role === "admin") {
+      html += `<a class="dropdown-item" href="crudCategories.html">Categories</a></div>`;
+    }
+    document.getElementById('dropdown').innerHTML = html;
+  });
+
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("GET", url);
+  ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.send();
+}
 
 function renderCategory(Categories) {
   let html = `<select id="category" name="category" class="form-control" data-live-search="true">`;
@@ -61,7 +80,6 @@ function get(id) {
   ajaxRequest.send();
 }
 
-
 function editSource(id) {
   const ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("error", error);
@@ -70,13 +88,14 @@ function editSource(id) {
     'url': document.getElementById('url').value,
     'nameSource': document.getElementById('name').value,
     'categoryID': document.getElementById('category').value,
-    'userID': user_id
+    'userID': usuario
   };
   ajaxRequest.setRequestHeader("Content-Type", "application/json");
   ajaxRequest.send(JSON.stringify(data));
 
-  window.location.href = "../crudCategories.html"
+  window.location.href = "crudNewsSources.html"
 }
 
 getCategories();
 get(newID);
+getUser(usuario);
