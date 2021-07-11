@@ -1,6 +1,7 @@
 let url_string = window.location.href;
 let url = new URL(url_string);
 let newID = url.searchParams.get("id");
+let idCategory = url.searchParams.get("idCategory");
 let usuario = sessionStorage.getItem("usuarioActivo");
 
 const error = (e) => console.log(e.target.responseText);
@@ -35,7 +36,12 @@ function getUser(id) {
 function renderCategory(Categories) {
   let html = `<select id="category" name="category" class="form-control" data-live-search="true">`;
   Categories.forEach(category => {
-    html += `<option value="${category._id}">${category.nameCategory}</option>`;
+    if (category._id === idCategory) {
+      html += `<option value="${category._id}" selected>${category.nameCategory}</option>`;
+    }
+    if (category._id != idCategory) {
+      html += `<option value="${category._id}">${category.nameCategory}</option>`;
+    }
   });
   html += '</select>';
   document.getElementById('category').innerHTML = html;

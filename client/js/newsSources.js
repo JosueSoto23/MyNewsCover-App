@@ -50,7 +50,7 @@ function renderSources(sources) {
               <tr>
                 <td>${source.nameSource}</td>
                 <td id="cat">${categories.nameCategory}</td>
-                <td><a href="editnews.html?id=${source._id}">
+                <td><a href="editnews.html?id=${source._id}&idCategory=${source.categoryID}">
                 <button type="button" class="btn btn-success">Edit</button></a>
                 <button onclick="deletesource('${source._id}')" type="button" class="btn btn-danger">Delete</button>
                 </td>
