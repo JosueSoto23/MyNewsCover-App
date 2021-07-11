@@ -1,97 +1,62 @@
-<!--<?php
-session_start();
-
-$user = $_SESSION['user'];
-
-$userI = $user['role_id'];
-if($user == null){
-  header("Location: index.php");
-}if($userI == 2){
-  header("Location: dashboard.php");
-}
-?>-->
-
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!--<link rel="stylesheet" href="register.css">-->
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="Style/Style.css">
+
+    <title> My News Cover </title>
+
 </head>
 
 <body>
-<nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
 
-            <div class="navbar-header ">
-                <a class="navbar-brand" rel="home" href="#" title="Buy Sell Rent Everyting">
-                    <!--<img style="max-width:200px; margin-top: -30px;" src="img/logo.jpg">-->
-                </a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-right">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <!--<?php echo $user['first_name'];?>-->
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="logica/cerrarSesion.php">Logout</a>
-                            <br>    
-                            <a class="dropdown-item" href="crudCategories.php">Categories</a>
-                        </div>
-                    </div>
-                </form>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+    <header>
+        <h1><a href="index.html"><img src="Images/logo.png"></a></h1>
+        <div id="dropdown" class="dropdown">
+        </div>
+        <h3 class="title"> Add Category </h3>
+        <hr class="hr-title">
+    </header>
 
     <div class="container">
+        <form action="" method="POST">
 
-        <h1>News Source</h1>
-        <form action="crudCategories.html" method="POST" class="form-group row" role="form">
-            <div class="col-xs-6">
-                <hr>
-            </div>
-            <div class="col-xs-3">
-                <input type="text" class="form-control" id="Category" name="Category" placeholder="Category">
-            </div>
-            <div class="col-xs-6">
-                <hr>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"> Name </span>
+                <input id="Category" type="text" name="name" class="form-control">
             </div>
             <div id="saves">
                 <button id="save" type="submit" class="btn btn-primary" onclick="saveCategory()">Save</button>
             </div>
+
         </form>
     </div>
 
     <footer>
-    <nav class="navbar navbar-default  navbar-fixed-bottom" role="navigation">
-        <div class="container text-center">
-            <div class="content-fooa">
-                <h4> <a href="">My Cover</a> | <a href="">About</a> | <a href="">Help</a></h4>
-            </div>
-            <p class="navbar-text col-md-12 col-sm-12 col-xs-12">&copy; My News Cover</p>
+        <div class="footer">
+            <hr>
+            <h4> <a href="">My Cover</a> | <a href="">About</a> | <a href="">Help</a></h4>
+            <p>&copy; My News Cover</p>
         </div>
-    </nav>
     </footer>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
         </script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
         </script>
-        <script type="text/javascript" src="js/loadCategory.js"></script>
+    <script type="text/javascript" src="js/loadCategory.js"></script>
 </body>
 
 </html>
