@@ -25,7 +25,6 @@ function validarCredenciales(user) {
     for (const i of user) {
         if (email === i.email && pass === i.password) {
             bAcceso = true;
-            alert(i.id)
             sessionStorage.setItem("usuarioActivo", i._id);
         }
     }
