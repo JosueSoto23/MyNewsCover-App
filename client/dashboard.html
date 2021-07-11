@@ -1,32 +1,3 @@
-<!--<?php
-
-session_start();
-
-  $user = $_SESSION['user'];
-
-  if($user == null){
-    header("Location: index.php");
-  }
-
-require 'logica/conexion.php';
-
-
-    
-    $conn = getConnection();
-
-    $consultar = "SELECT * FROM categories";
-    $querys = mysqli_query($conn,$consultar);
-    $arrays = mysqli_fetch_array($querys);
-
-    $userI = $user['id'];
-    $cons = "SELECT * FROM news WHERE user_id = '$userI'";
-    $query = mysqli_query($conn, $cons);
-    $array = mysqli_fetch_array($query);
-if($array == ""){
-    header("Location: crud.php");
-}
-
-?>-->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -53,23 +24,14 @@ if($array == ""){
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <div class="dropdown">
+                <div id="dropdown" class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 90px;">
-                        <!--<?php echo $user['first_name'];?>-->
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="logica/cerrarSesion.php">Logout</a>
                         <a class="dropdown-item" href="crud.php">News Sources</a>
                         <a class="dropdown-item" href="crudCategories.html">Categories</a>
-                        <!--<?php if($user["role_id"] == 1){?>
-                            
-                        <a class="dropdown-item" href="crudCategories.php">Categories</a>
-                        <?php
-                        }if($user["role_id"] == 2){
-
-                        }
-                        ?>-->
                     </div>
                 </div>
             </form>
@@ -157,26 +119,6 @@ if($array == ""){
         </div>
 
         <footer>
-            <!-- <hr id="hr3">
-        <div class="contenedor-footer">
-            <div class="content-foo">
-                <h4>Incio</h4>
-            </div>
-            <div class="content-fo">
-                <h4>|</h4>
-            </div>
-            <div class="content-foo">
-                <h4>Cambalache</h4>
-            </div>
-            <div class="content-fo">
-                <h4>|</h4>
-            </div>
-            <div class="content-foo">
-                <h4>Ingresar</h4>
-            </div>
-        </div>
-        <h2 class="titulo-final">&copy; Cambalache.net</h2>-->
-
             <nav>
                 <hr>
                 <div class="container text-center">
@@ -197,6 +139,7 @@ if($array == ""){
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
         </script>
+        <script type="text/javascript" src="js/dashboard.js"></script>
 </body>
 
 </html>

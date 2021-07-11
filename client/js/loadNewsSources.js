@@ -1,4 +1,5 @@
 const error = (e) => console.log(e.target.responseText);
+let usuario = sessionStorage.getItem("usuarioActivo");
 
 function saveSources() {
     const ajaxRequest = new XMLHttpRequest();
@@ -10,7 +11,7 @@ function saveSources() {
         'url': document.getElementById('url').value,
         'nameSource': document.getElementById('name').value,
         'categoryID': document.getElementById('category').value,
-        'userID': "1"
+        'userID': usuario
     };
     const enviar = ajaxRequest.send(JSON.stringify(data));
   }

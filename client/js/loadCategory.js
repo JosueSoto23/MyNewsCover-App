@@ -70,6 +70,4 @@ function renderCourses(Categories) {
     ajaxRequest.send();
   }
 
-if(location.toString() === "file:///C:/Users/geber/Documents/Web/MyNewsCover-App/client/crudCategories.html"){
   get();
-}
