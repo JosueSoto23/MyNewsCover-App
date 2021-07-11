@@ -38,6 +38,7 @@ function saveCategory() {
     'nameCategory': document.getElementById('Category').value
   };
   const enviar = ajaxRequest.send(JSON.stringify(data));
+  window.location.href = "crudCategories.html"
 }
 
 function redireccionar() {

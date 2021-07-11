@@ -32,7 +32,7 @@ function editCategory(id) {
     ajaxRequest.setRequestHeader("Content-Type", "application/json");
     ajaxRequest.send(JSON.stringify(data));
 
-    window.location.href = "../crudCategories.html"
+    window.location.href = "crudCategories.html"
 }
 
 get(newID);
