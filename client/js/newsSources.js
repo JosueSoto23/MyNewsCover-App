@@ -19,7 +19,7 @@ function getUser(id) {
     if (userResponse.role === "admin") {
       html += `<a class="dropdown-item" href="crudCategories.html">Categories</a></div>`;
     }
-    document.getElementById('dropdown').innerHTML = html;
+    document.getElementById("dropdown").innerHTML = html;
   });
 
   ajaxRequest.addEventListener("error", error);
@@ -39,9 +39,8 @@ function renderSources(sources) {
           <th>Category</th>
           <th>Actions</th>
         </tr>`;
-    sources.forEach(source => {
-      taskResponse.forEach(categories => {
-
+    sources.forEach((source) => {
+      taskResponse.forEach((categories) => {
         if (source.userID === usuario) {
           if (source.categoryID === categories._id) {
             html += `<thead class="thead-dark">
@@ -58,12 +57,11 @@ function renderSources(sources) {
             </tbody>`;
           }
         } else {
-
         }
       });
     });
-    html += '</table>';
-    document.getElementById('tableList').innerHTML = html;
+    html += "</table>";
+    document.getElementById("tableList").innerHTML = html;
   });
 
   ajaxRequest.addEventListener("error", error);
@@ -106,8 +104,8 @@ function get(id) {
 get();
 
 /**
-   *  Get on or all
-   */
+ *  Get on or all
+ */
 function getCategories(id) {
   let url = "http://localhost:3000/api/categories";
   if (id) {
@@ -129,7 +127,129 @@ function getCategories(id) {
 }
 
 var toType = function (obj) {
-  return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase()
+  return {}.toString
+    .call(obj)
+    .match(/\s([a-z|A-Z]+)/)[1]
+    .toLowerCase();
+};
+
+function getNews(id) {
+  let url = "http://localhost:3000/api/newsSources";
+  if (id) {
+    url = `${url}?id=${id}`;
+  }
+  const ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("load", (response) => {
+    const newsResponse = JSON.parse(response.target.responseText);
+
+    newsResponse.forEach((sources) => {
+      if(sources.userID === usuario){
+      fetch(`https://cors-anywhere.herokuapp.com/${sources.url}`).then(
+        (response) => {
+          response.text().then((xml) => {
+            let xmlContent = xml;
+            let parser = new DOMParser();
+            let xmlDOM = parser.parseFromString(xmlContent, "application/xml");
+            let news = xmlDOM.querySelectorAll("item");
+            console.log(news);
+
+            news.forEach((item, i) => {
+              if (news.length > 16) {
+                if (sources.userID === usuario) {
+                  let titulo = item.children[1].innerHTML;
+                  let tituloArreglado = titulo.slice(9, -3);
+
+                  let link = item.children[2].innerHTML;
+                  let linkArreglado = link.slice(9, -3);
+
+                  let fecha = item.children[3].innerHTML;
+
+                  let descripcion = item.children[4].innerHTML;
+                  let descripcionArreglada = descripcion.slice(9, -3);
+
+                  try {
+                    const ajaxRequest = new XMLHttpRequest();
+                    ajaxRequest.addEventListener("error", error);
+                    ajaxRequest.open("POST", "http://localhost:3000/api/news");
+                    ajaxRequest.setRequestHeader(
+                      "Content-Type",
+                      "application/json"
+                    );
+
+                    const data = {
+                      title: tituloArreglado,
+                      short_description: descripcionArreglada,
+                      permanlink: linkArreglado,
+                      date: fecha,
+                      news_source_id: sources._id,
+                      user_id: sources.userID,
+                      category_id: sources.categoryID,
+                    };
+
+                    ajaxRequest.send(JSON.stringify(data));
+
+                    i++;
+
+                    if (i >= 10) {
+                      return;
+                    }
+                  } catch (e) {
+                    console.log("Error al guardar la noticia", e);
+                  }
+                }
+              } else {
+                let titulo = item.children[1].innerHTML;
+                  let tituloArreglado = titulo.slice(9, -3);
+
+                  let link = item.children[2].innerHTML;
+                  let linkArreglado = link.slice(9, -3);
+
+                  let fecha = item.children[3].innerHTML;
+
+                  let descripcion = item.children[4].innerHTML;
+                  let descripcionArreglada = descripcion.slice(9, -3);
+                try {
+                  const ajaxRequest = new XMLHttpRequest();
+                  ajaxRequest.addEventListener("error", error);
+                  ajaxRequest.open("POST", "http://localhost:3000/api/news");
+                  ajaxRequest.setRequestHeader(
+                    "Content-Type",
+                    "application/json"
+                  );
+
+                  const data = {
+                    title: tituloArreglado,
+                    short_description: descripcionArreglada,
+                    permanlink: linkArreglado,
+                    date: fecha,
+                    news_source_id: sources._id,
+                    user_id: sources.userID,
+                    category_id: sources.categoryID,
+                  };
+
+                  ajaxRequest.send(JSON.stringify(data));
+
+                  i++;
+
+                  if (i >= 10) {
+                    return;
+                  }
+                } catch (e) {
+                  console.log("Error al guardar la noticia", e);
+                }
+              }
+            });
+          });
+        }
+      );
+    }
+    });
+  });
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("GET", url);
+  ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.send();
 }
 
 getUser(usuario);
+getNews();
