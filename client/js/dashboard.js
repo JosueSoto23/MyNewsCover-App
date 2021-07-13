@@ -71,13 +71,13 @@ function getNews(filter) {
           html += `<div class="col">
                     <div class="card h-100">
                         <div class="card-body">
-                            <p class="card-text">${news.user_id}</p>
+                            <p class="card-text">${news.date}</p>
                         </div>
                         <!--<img class="card-img-top" src="" alt="Card image cap">-->
                         <div class="card-body">
                             <h5 class="card-title">${news.title}</title></h5>
                             <h6 class="card-title">news.category_id</h6>
-                            <p class="card-text">${news.short_description}</p>
+                            <p class="card-text">${news.short_description.slice(0, 400)}</p>
                         </div>
                         <div class="card-footer">
                             <a href="${news.permanlink}" class="card-link">Ver Noticia</a>
@@ -88,13 +88,13 @@ function getNews(filter) {
           html += `<div class="col">
           <div class="card h-100">
               <div class="card-body">
-                  <p class="card-text">${news.user_id}</p>
+                  <p class="card-text">${news.date}</p>
               </div>
               <!--<img class="card-img-top" src="" alt="Card image cap">-->
               <div class="card-body">
                   <h5 class="card-title">${news.title}</title></h5>
                   <h6 class="card-title">news.category_id</h6>
-                  <p class="card-text">${news.short_description}</p>
+                  <p id="desc" class="card-text">${news.short_description.slice(0, 500)}</p>
               </div>
               <div class="card-footer">
                   <a href="${news.permanlink}" class="card-link">Ver Noticia</a>
@@ -102,18 +102,18 @@ function getNews(filter) {
               </div>
           </div>`;
         }
-    } else {
-
-    }
+      } else {
+        window.location.href="crudNewsSources.html";
+      }
     });
-  html += `</div>`;
-  document.getElementById('card-columns').innerHTML = html;
-});
+    html += `</div>`;
+    document.getElementById('card-columns').innerHTML = html;
+  });
 
-ajaxRequest.addEventListener("error", error);
-ajaxRequest.open("GET", url);
-ajaxRequest.setRequestHeader("Content-Type", "application/json");
-ajaxRequest.send();
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("GET", url);
+  ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.send();
 }
 
 getNews("portada");
