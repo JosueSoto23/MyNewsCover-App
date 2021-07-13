@@ -28,6 +28,37 @@ function get(id) {
   ajaxRequest.send();
 }
 
+function renderCategory(Categories) {
+  let html = `<div id = "categories">`;
+  Categories.forEach(category => {
+    html += `<button type='button' class='btn btn-outline-primary'>${category.nameCategory}</button>`;
+  });
+  html += '</div>';
+  document.getElementById('categories').innerHTML = html;
+}
+
+function getCategories(id) {
+  let url = "http://localhost:3000/api/categories";
+  if (id) {
+    url = `${url}?id=${id}`;
+  }
+  const ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("load", (response) => {
+    const taskResponse = JSON.parse(response.target.responseText);
+    if (id) {
+      renderCategory(taskResponse);
+    }
+    else {
+      renderCategory(taskResponse);
+    }
+
+  });
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("GET", url);
+  ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.send();
+}
+
 function getNews(id) {
   let url = "http://localhost:3000/api/news";
   if (id) {
@@ -68,5 +99,7 @@ function getNews(id) {
   ajaxRequest.setRequestHeader("Content-Type", "application/json");
   ajaxRequest.send();
 }
+
 getNews();
 get(usuario);
+getCategories();
