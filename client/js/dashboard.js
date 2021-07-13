@@ -38,8 +38,8 @@ function getNews(id) {
     const News = JSON.parse(response.target.responseText);
     let html = `<div class="row row-cols-1 row-cols-md-3 g-4">`;
     News.forEach((news) => {
-      if(news.user_id === usuario){
-    html += `<div class="col">
+      if (news.user_id === usuario) {
+        html += `<div class="col">
     <div class="card h-100">
         <div class="card-body">
             <p class="card-text">${news.user_id}</p>
@@ -55,12 +55,12 @@ function getNews(id) {
         </div>
         </div>
     </div>`;
-      }else{
-        
+      } else {
+
       }
-  });
-  html += `</div>`;
-  document.getElementById('card-columns').innerHTML = html;
+    });
+    html += `</div>`;
+    document.getElementById('card-columns').innerHTML = html;
   });
 
   ajaxRequest.addEventListener("error", error);

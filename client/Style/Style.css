@@ -62,6 +62,12 @@ img {
   width: 200px;
 }
 
+p img {
+  width: 300px;
+  max-width: 300px;
+  max-height: 200px;
+}
+
 .home {
   display: flex;
   flex-wrap: wrap;
