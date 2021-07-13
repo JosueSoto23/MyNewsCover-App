@@ -31,7 +31,7 @@ function get(id) {
 function renderCategory(Categories) {
   let html = `<div id = "categories">`;
   Categories.forEach(category => {
-    html += `<button type='button' class='btn btn-outline-primary'>${category.nameCategory}</button>`;
+    html += `<button type='button' class='btn btn-outline-primary' href="" onclick="getNews('${category._id}')">${category.nameCategory}</button>`;
   });
   html += '</div>';
   document.getElementById('categories').innerHTML = html;
@@ -59,47 +59,63 @@ function getCategories(id) {
   ajaxRequest.send();
 }
 
-function getNews(id) {
+function getNews(filter) {
   let url = "http://localhost:3000/api/news";
-  if (id) {
-    url = `${url}?id=${id}`;
-  }
   let ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("load", (response) => {
     const News = JSON.parse(response.target.responseText);
     let html = `<div class="row row-cols-1 row-cols-md-3 g-4">`;
     News.forEach((news) => {
       if (news.user_id === usuario) {
-        html += `<div class="col">
-    <div class="card h-100">
-        <div class="card-body">
-            <p class="card-text">${news.user_id}</p>
-        </div>
-        <!--<img class="card-img-top" src="" alt="Card image cap">-->
-        <div class="card-body">
-            <h5 class="card-title">${news.title}</title></h5>
-            <h6 class="card-title">news.category_id</h6>
-            <p class="card-text">${news.short_description}</p>
-        </div>
-        <div class="card-footer">
-            <a href="${news.permanlink}" class="card-link">Ver Noticia</a>
-        </div>
-        </div>
-    </div>`;
-      } else {
+        if (news.category_id === filter) {
+          html += `<div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <p class="card-text">${news.user_id}</p>
+                        </div>
+                        <!--<img class="card-img-top" src="" alt="Card image cap">-->
+                        <div class="card-body">
+                            <h5 class="card-title">${news.title}</title></h5>
+                            <h6 class="card-title">news.category_id</h6>
+                            <p class="card-text">${news.short_description}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="${news.permanlink}" class="card-link">Ver Noticia</a>
+                        </div>
+                        </div>
+                    </div>`;
+        } else if ("portada" === filter) {
+          html += `<div class="col">
+          <div class="card h-100">
+              <div class="card-body">
+                  <p class="card-text">${news.user_id}</p>
+              </div>
+              <!--<img class="card-img-top" src="" alt="Card image cap">-->
+              <div class="card-body">
+                  <h5 class="card-title">${news.title}</title></h5>
+                  <h6 class="card-title">news.category_id</h6>
+                  <p class="card-text">${news.short_description}</p>
+              </div>
+              <div class="card-footer">
+                  <a href="${news.permanlink}" class="card-link">Ver Noticia</a>
+              </div>
+              </div>
+          </div>`;
+        }
+    } else {
 
-      }
+    }
     });
-    html += `</div>`;
-    document.getElementById('card-columns').innerHTML = html;
-  });
+  html += `</div>`;
+  document.getElementById('card-columns').innerHTML = html;
+});
 
-  ajaxRequest.addEventListener("error", error);
-  ajaxRequest.open("GET", url);
-  ajaxRequest.setRequestHeader("Content-Type", "application/json");
-  ajaxRequest.send();
+ajaxRequest.addEventListener("error", error);
+ajaxRequest.open("GET", url);
+ajaxRequest.setRequestHeader("Content-Type", "application/json");
+ajaxRequest.send();
 }
 
-getNews();
+getNews("portada");
 get(usuario);
 getCategories();
