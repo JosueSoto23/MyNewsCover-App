@@ -1,5 +1,8 @@
 const error = (e) => console.log(e.target.responseText);
 let usuario = sessionStorage.getItem("usuarioActivo");
+if(usuario === null){
+  window.location.href = "./index.html";
+}
 
 function get(id) {
   let url = "http://localhost:3000/api/users";
@@ -14,7 +17,7 @@ function get(id) {
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 90px;"><img class="icon" src="Images/user_50px.png" alt="x" />
         ${userResponse.firstName} </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="index.html">Logout</a>
+        <button class="dropdown-item" onclick="removeSession()"/>Logout</button>
         <a class="dropdown-item" href="crudNewsSources.html">News Sources</a>`;
     if (userResponse.role === "admin") {
       html += `<a class="dropdown-item" href="crudCategories.html">Categories</a></div>`;
@@ -28,6 +31,10 @@ function get(id) {
   ajaxRequest.send();
 }
 
+function removeSession(){
+  sessionStorage.removeItem("usuarioActivo");
+    window.location.href = "./index.html";
+}
 function renderCategory(Categories) {
   let html = `<div id = "categories">`;
   Categories.forEach(category => {

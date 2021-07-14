@@ -3,6 +3,9 @@ let url = new URL(url_string);
 let newID = url.searchParams.get("id");
 let idCategory = url.searchParams.get("idCategory");
 let usuario = sessionStorage.getItem("usuarioActivo");
+if(usuario === null){
+  window.location.href = "./index.html";
+}
 
 const error = (e) => console.log(e.target.responseText);
 
@@ -19,7 +22,7 @@ function getUser(id) {
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 90px;"><img class="icon" src="Images/user_50px.png" alt="x" />
         ${userResponse.firstName} </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="index.html">Logout</a>
+    <button class="dropdown-item" onclick="removeSession()"/>Logout</button>
         <a class="dropdown-item" href="crudNewsSources.html">News Sources</a>`;
     if (userResponse.role === "admin") {
       html += `<a class="dropdown-item" href="crudCategories.html">Categories</a></div>`;
@@ -31,6 +34,11 @@ function getUser(id) {
   ajaxRequest.open("GET", url);
   ajaxRequest.setRequestHeader("Content-Type", "application/json");
   ajaxRequest.send();
+}
+
+function removeSession(){
+  sessionStorage.removeItem("usuarioActivo");
+    window.location.href = "./index.html";
 }
 
 function renderCategory(Categories) {
