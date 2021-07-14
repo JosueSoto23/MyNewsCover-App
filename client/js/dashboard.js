@@ -103,7 +103,7 @@ function getNews(filter) {
           </div>`;
         }
       } else {
-        window.location.href="crudNewsSources.html";
+       // window.location.href="crudNewsSources.html";
       }
     });
     html += `</div>`;

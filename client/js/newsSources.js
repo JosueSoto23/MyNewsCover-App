@@ -133,6 +133,34 @@ var toType = function (obj) {
     .toLowerCase();
 };
 
+function getNewsDelete(id) {
+  let url = "http://localhost:3000/api/news";
+  const ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("load", (response) => {
+    const taskResponse = JSON.parse(response.target.responseText);
+    taskResponse.forEach(news => {
+      if(news.user_id === usuario){
+      deleteNews(news._id);
+      }
+    });
+  });
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("GET", url);
+  ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.send();
+}
+
+function deleteNews(id) {
+  const ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("DELETE", `http://localhost:3000/api/news?id=${id}`);
+  ajaxRequest.send();
+  console.log("Removing News...")
+}
+$(window).load(function() {
+    $(".loader").fadeOut("slow");
+});
+
 function getNews(id) {
   let url = "http://localhost:3000/api/newsSources";
   if (id) {
@@ -155,6 +183,7 @@ function getNews(id) {
 
             news.forEach((item, i) => {
               if (news.length > 16) {
+                console.log("Voy por aquí, soy El periodico")
                 if (sources.userID === usuario) {
                   let titulo = item.children[1].innerHTML;
                   let tituloArreglado = titulo.slice(9, -3);
@@ -198,16 +227,17 @@ function getNews(id) {
                   }
                 }
               } else {
-                let titulo = item.children[1].innerHTML;
-                  let tituloArreglado = titulo.slice(9, -3);
+                console.log("Voy por aquí, soy CrHoy")
+                let tituloArreglado = item.children[0].innerHTML;
+                  //let tituloArreglado = titulo.slice(9, -3);
 
-                  let link = item.children[2].innerHTML;
-                  let linkArreglado = link.slice(9, -3);
+                  let linkArreglado = item.children[1].innerHTML;
+                  //let linkArreglado = link.slice(9, -3);
 
                   let fecha = item.children[3].innerHTML;
 
-                  let descripcion = item.children[4].innerHTML;
-                  let descripcionArreglada = descripcion.slice(9, -3);
+                  let descripcionArreglada = item.children[10].textContent;
+                  //let descripcionArreglada = descripcion.slice(9, -3);
                 try {
                   const ajaxRequest = new XMLHttpRequest();
                   ajaxRequest.addEventListener("error", error);
@@ -250,6 +280,6 @@ function getNews(id) {
   ajaxRequest.setRequestHeader("Content-Type", "application/json");
   ajaxRequest.send();
 }
-
+getNewsDelete();
 getUser(usuario);
 getNews();
