@@ -1,6 +1,6 @@
 const error = (e) => console.log(e.target.responseText);
 let usuario = sessionStorage.getItem("usuarioActivo");
-if(usuario === null){
+if (usuario === null) {
   window.location.href = "./index.html";
 }
 
@@ -22,7 +22,7 @@ function get(id) {
     if (userResponse.role === "admin") {
       html += `<a class="dropdown-item" href="crudCategories.html">Categories</a></div>`;
     }
-    document.getElementById('dropdown').innerHTML = html;
+    document.getElementById("dropdown").innerHTML = html;
   });
 
   ajaxRequest.addEventListener("error", error);
@@ -31,17 +31,17 @@ function get(id) {
   ajaxRequest.send();
 }
 
-function removeSession(){
+function removeSession() {
   sessionStorage.removeItem("usuarioActivo");
-    window.location.href = "./index.html";
+  window.location.href = "./index.html";
 }
 function renderCategory(Categories) {
   let html = `<div id = "categories">`;
-  Categories.forEach(category => {
+  Categories.forEach((category) => {
     html += `<button type='button' class='btn btn-outline-primary' href="" onclick="getNews('${category._id}')">${category.nameCategory}</button>`;
   });
-  html += '</div>';
-  document.getElementById('categories').innerHTML = html;
+  html += "</div>";
+  document.getElementById("categories").innerHTML = html;
 }
 
 function getCategories(id) {
@@ -54,11 +54,9 @@ function getCategories(id) {
     const taskResponse = JSON.parse(response.target.responseText);
     if (id) {
       renderCategory(taskResponse);
-    }
-    else {
+    } else {
       renderCategory(taskResponse);
     }
-
   });
   ajaxRequest.addEventListener("error", error);
   ajaxRequest.open("GET", url);
@@ -71,56 +69,100 @@ function getNews(filter) {
   let ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("load", (response) => {
     const News = JSON.parse(response.target.responseText);
-    let html = `<div class="row row-cols-1 row-cols-md-3 g-4">`;
-    News.forEach((news) => {
-      if (news.user_id === usuario) {
-        if (news.category_id === filter) {
-          html += `<div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <p class="card-text">${news.date}</p>
-                        </div>
-                        <!--<img class="card-img-top" src="" alt="Card image cap">-->
-                        <div class="card-body">
-                            <h5 class="card-title">${news.title}</title></h5>
-                            <h6 class="card-title">news.category_id</h6>
-                            <p class="card-text">${news.short_description.slice(0, 400)}</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="${news.permanlink}" class="card-link">Ver Noticia</a>
-                        </div>
-                        </div>
-                    </div>`;
-        } else if ("portada" === filter) {
-          html += `<div class="col">
-          <div class="card h-100">
-              <div class="card-body">
-                  <p class="card-text">${news.date}</p>
-              </div>
-              <!--<img class="card-img-top" src="" alt="Card image cap">-->
-              <div class="card-body">
-                  <h5 class="card-title">${news.title}</title></h5>
-                  <h6 class="card-title">news.category_id</h6>
-                  <p id="desc" class="card-text">${news.short_description.slice(0, 500)}</p>
-              </div>
-              <div class="card-footer">
-                  <a href="${news.permanlink}" class="card-link">Ver Noticia</a>
-              </div>
-              </div>
-          </div>`;
-        }
-      } else {
-       // window.location.href="crudNewsSources.html";
-      }
+    redireccionar(News);
+    let urls = "http://localhost:3000/api/categories";
+    const ajaxRequest1 = new XMLHttpRequest();
+    ajaxRequest1.addEventListener("load", (response) => {
+      const categories = JSON.parse(response.target.responseText);
+      let html = `<div class="row row-cols-1 row-cols-md-3 g-4">`;
+      News.forEach((news) => {
+        categories.forEach((category) => {
+          if (news.user_id === usuario) {
+            if (news.category_id === category._id) {
+              if (news.category_id === filter) {
+                html += `<div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <p class="card-text">${news.date}</p>
+                            </div>
+                            <!--<img class="card-img-top" src="" alt="Card image cap">-->
+                            <div class="card-body">
+                                <h5 class="card-title">${
+                                  news.title
+                                }</title></h5>
+                                <h6 class="card-title">${
+                                  category.nameCategory
+                                }</h6>
+                                <p class="card-text">${news.short_description.slice(
+                                  0,
+                                  400
+                                )}</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="${
+                                  news.permanlink
+                                }" class="card-link">Ver Noticia</a>
+                            </div>
+                            </div>
+                        </div>`;
+              } else if ("portada" === filter) {
+                html += `<div class="col">
+              <div class="card h-100">
+                  <div class="card-body">
+                      <p class="card-text">${news.date}</p>
+                  </div>
+                  <!--<img class="card-img-top" src="" alt="Card image cap">-->
+                  <div class="card-body">
+                      <h5 class="card-title">${news.title}</title></h5>
+                      <h6 class="card-title">${category.nameCategory}</h6>
+                      <p id="desc" class="card-text">${news.short_description.slice(
+                        0,
+                        500
+                      )}</p>
+                  </div>
+                  <div class="card-footer">
+                      <a href="${
+                        news.permanlink
+                      }" class="card-link">Ver Noticia</a>
+                  </div>
+                  </div>
+              </div>`;
+              }
+            }
+          } else {
+            
+          }
+        });
+      });
+      html += `</div>`;
+      document.getElementById("card-columns").innerHTML = html;
     });
-    html += `</div>`;
-    document.getElementById('card-columns').innerHTML = html;
+    ajaxRequest1.addEventListener("error", error);
+    ajaxRequest1.open("GET", urls);
+    ajaxRequest1.setRequestHeader("Content-Type", "application/json");
+    ajaxRequest1.send();
   });
-
   ajaxRequest.addEventListener("error", error);
   ajaxRequest.open("GET", url);
   ajaxRequest.setRequestHeader("Content-Type", "application/json");
   ajaxRequest.send();
+}
+
+function redireccionar(news){
+  var bAcceso = false;
+  for (const i of news) {
+    if (usuario === i.user_id) {
+        bAcceso = true;
+    }
+}
+redi(bAcceso);
+}
+
+function redi(bAcceso) {
+  if (bAcceso == true) {  
+  } else {
+    window.location.href = "./crudNewsSources.html";
+  }
 }
 
 getNews("portada");
