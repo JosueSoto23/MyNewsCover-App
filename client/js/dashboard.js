@@ -95,7 +95,7 @@ function getNews(filter) {
                                 }</h6>
                                 <p class="card-text">${news.short_description.slice(
                                   0,
-                                  400
+                                  500
                                 )}</p>
                             </div>
                             <div class="card-footer">
