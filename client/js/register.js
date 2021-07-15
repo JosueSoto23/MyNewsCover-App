@@ -1,5 +1,8 @@
 const error = (e) => console.log(e.target.responseText);
 
+/**
+ * Register users
+ */
 function saveCourse() {
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("error", error);

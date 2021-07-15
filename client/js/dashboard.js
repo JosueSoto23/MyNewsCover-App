@@ -1,9 +1,17 @@
 const error = (e) => console.log(e.target.responseText);
+
+/**
+ * Variable that gets the sessionstorage
+ */
 let usuario = sessionStorage.getItem("usuarioActivo");
 if (usuario === null) {
   window.location.href = "./index.html";
 }
 
+/**
+ * Gets the logged in user and display it in the dropdown
+ * @param {*} id 
+ */ 
 function get(id) {
   let url = "http://localhost:3000/api/users";
   if (id) {
@@ -24,17 +32,24 @@ function get(id) {
     }
     document.getElementById("dropdown").innerHTML = html;
   });
-
   ajaxRequest.addEventListener("error", error);
   ajaxRequest.open("GET", url);
   ajaxRequest.setRequestHeader("Content-Type", "application/json");
   ajaxRequest.send();
 }
-
+/**
+ * Remove the session from the sessionstorage 
+ * and redirect the user to login
+ */
 function removeSession() {
   sessionStorage.removeItem("usuarioActivo");
   window.location.href = "./index.html";
 }
+
+/**
+ * Render categories into buttons
+ * @param {*} Categories 
+ */
 function renderCategory(Categories) {
   let html = `<div id = "categories">`;
   Categories.forEach((category) => {
@@ -44,6 +59,10 @@ function renderCategory(Categories) {
   document.getElementById("categories").innerHTML = html;
 }
 
+/**
+ * Get all categories
+ * @param {*} id 
+ */
 function getCategories(id) {
   let url = "http://localhost:3000/api/categories";
   if (id) {
@@ -64,6 +83,11 @@ function getCategories(id) {
   ajaxRequest.send();
 }
 
+/**
+ * Get the news of the logged-in user and filter 
+ * the news by the ID of the categories
+ * @param {*} filter 
+ */
 function getNews(filter) {
   let url = "http://localhost:3000/api/news";
   let ajaxRequest = new XMLHttpRequest();
@@ -130,7 +154,6 @@ function getNews(filter) {
               }
             }
           } else {
-            
           }
         });
       });
@@ -148,6 +171,10 @@ function getNews(filter) {
   ajaxRequest.send();
 }
 
+/**
+ * Verify that the user does not have news sources and news
+ * @param {*} news 
+ */
 function redireccionar(news){
   var bAcceso = false;
   for (const i of news) {
@@ -158,6 +185,11 @@ function redireccionar(news){
 redi(bAcceso);
 }
 
+/**
+ * If the user does not have a news feed and it 
+ * redirects him to the news feed CRUD to add a feed
+ * @param {*} bAcceso 
+ */
 function redi(bAcceso) {
   if (bAcceso == true) {  
   } else {

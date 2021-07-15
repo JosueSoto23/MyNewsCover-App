@@ -1,9 +1,16 @@
 const error = (e) => console.log(e.target.responseText);
+/**
+ * Variable that gets the sessionstorage
+ */
 let usuario = sessionStorage.getItem("usuarioActivo");
 if(usuario === null){
   window.location.href = "./index.html";
 }
 
+/**
+ * Gets the logged in user and display it in the dropdown
+ * @param {*} id 
+ */
 function getUser(id) {
   let url = "http://localhost:3000/api/users";
   if (id) {
@@ -31,11 +38,19 @@ function getUser(id) {
   ajaxRequest.send();
 }
 
+/**
+ * Remove the session from the sessionstorage 
+ * and redirect the user to login
+ */
 function removeSession(){
   sessionStorage.removeItem("usuarioActivo");
     window.location.href = "./index.html";
 }
 
+/**
+ * Render sources by userID
+ * @param {*} sources 
+ */
 function renderSources(sources) {
   let url = "http://localhost:3000/api/categories";
   const ajaxRequest = new XMLHttpRequest();
@@ -78,6 +93,10 @@ function renderSources(sources) {
   ajaxRequest.send();
 }
 
+/**
+ * Delete sources by ID
+ * @param {*} id 
+ */
 function deletesource(id) {
   const ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("error", error);
@@ -87,7 +106,7 @@ function deletesource(id) {
 }
 
 /**
- *  Get on or all
+ *  Get all sources
  */
 function get(id) {
   let url = "http://localhost:3000/api/newsSources";
@@ -112,7 +131,7 @@ function get(id) {
 get();
 
 /**
- *  Get on or all
+ *  Get all categories
  */
 function getCategories(id) {
   let url = "http://localhost:3000/api/categories";
@@ -134,6 +153,11 @@ function getCategories(id) {
   ajaxRequest.send();
 }
 
+/**
+ * Check the type of variable
+ * @param {*} obj 
+ * @returns 
+ */
 var toType = function (obj) {
   return {}.toString
     .call(obj)
@@ -141,6 +165,10 @@ var toType = function (obj) {
     .toLowerCase();
 };
 
+/**
+ * Get news by userID 
+ * @param {*} id 
+ */
 function getNewsDelete(id) {
   let url = "http://localhost:3000/api/news";
   const ajaxRequest = new XMLHttpRequest();
@@ -158,6 +186,10 @@ function getNewsDelete(id) {
   ajaxRequest.send();
 }
 
+/**
+ * Delete news by id
+ * @param {*} id 
+ */
 function deleteNews(id) {
   const ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("error", error);
@@ -165,10 +197,18 @@ function deleteNews(id) {
   ajaxRequest.send();
   console.log("Removing News...")
 }
+
+/** 
+ * Remove the loading screen
+*/
 $(window).load(function() {
     $(".loader").fadeOut("slow");
 });
 
+/**
+ * Get news sources by user ID and save news by userID
+ * @param {*} id 
+ */
 function getNews(id) {
   let url = "http://localhost:3000/api/newsSources";
   if (id) {

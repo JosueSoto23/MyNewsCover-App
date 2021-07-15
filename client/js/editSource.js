@@ -2,6 +2,9 @@ let url_string = window.location.href;
 let url = new URL(url_string);
 let newID = url.searchParams.get("id");
 let idCategory = url.searchParams.get("idCategory");
+/**
+ * Variable that gets the sessionstorage
+ */
 let usuario = sessionStorage.getItem("usuarioActivo");
 if(usuario === null){
   window.location.href = "./index.html";
@@ -9,6 +12,10 @@ if(usuario === null){
 
 const error = (e) => console.log(e.target.responseText);
 
+/**
+ * Gets the logged in user and display it in the dropdown
+ * @param {*} id 
+ */
 function getUser(id) {
   let url = "http://localhost:3000/api/users";
   if (id) {
@@ -36,11 +43,19 @@ function getUser(id) {
   ajaxRequest.send();
 }
 
+ /**
+ * Remove the session from the sessionstorage 
+ * and redirect the user to login
+ */
 function removeSession(){
   sessionStorage.removeItem("usuarioActivo");
     window.location.href = "./index.html";
 }
 
+/**
+ * Render categories on select
+ * @param {*} Categories 
+ */
 function renderCategory(Categories) {
   let html = `<select id="category" name="category" class="form-control" data-live-search="true">`;
   Categories.forEach(category => {
@@ -55,6 +70,10 @@ function renderCategory(Categories) {
   document.getElementById('category').innerHTML = html;
 }
 
+/**
+ * Get all categories
+ * @param {*} id 
+ */
 function getCategories(id) {
   let url = "http://localhost:3000/api/categories";
   if (id) {
@@ -77,6 +96,10 @@ function getCategories(id) {
   ajaxRequest.send();
 }
 
+/**
+ * Get the news sources by ID and display the name in the inputs
+ * @param {*} id 
+ */
 function get(id) {
   let url = "http://localhost:3000/api/newsSources";
   if (id) {
@@ -94,6 +117,10 @@ function get(id) {
   ajaxRequest.send();
 }
 
+/**
+ * Edit the news sources
+ * @param {*} id 
+ */
 function editSource(id) {
   const ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("error", error);

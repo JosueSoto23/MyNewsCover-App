@@ -1,9 +1,16 @@
 const error = (e) => console.log(e.target.responseText);
+/**
+ * Variable that gets the sessionstorage
+ */
 let usuario = sessionStorage.getItem("usuarioActivo");
 if(usuario === null){
   window.location.href = "./index.html";
 }
 
+/**
+ * Gets the logged in user and display it in the dropdown
+ * @param {*} id 
+ */
 function getUser(id) {
   let url = "http://localhost:3000/api/users";
   if (id) {
@@ -29,15 +36,26 @@ function getUser(id) {
   ajaxRequest.send();
 }
 
+/**
+ * Remove the session from the sessionstorage 
+ * and redirect the user to login
+ */
 function removeSession(){
   sessionStorage.removeItem("usuarioActivo");
     window.location.href = "./index.html";
 }
 
+/**
+ * Redirect the user to crudCategories
+ */
 function redireccionar() {
   window.location.href = "crudCategories.html"
 }
 
+/**
+ * Render categories on table
+ * @param {*} Categories 
+ */
 function renderCourses(Categories) {
   let html = `<table class="table table-responsive table-bordered">
       <tr>
@@ -61,6 +79,10 @@ function renderCourses(Categories) {
   document.getElementById('tableList').innerHTML = html;
 }
 
+/**
+ * Delete categories by ID
+ * @param {*} id 
+ */
 function deleteCategory(id) {
   const ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("error", error);
@@ -70,7 +92,7 @@ function deleteCategory(id) {
 }
 
 /**
- *  Get on or all
+ *  Get all categories
  */
 function get(id) {
   let url = "http://localhost:3000/api/categories";

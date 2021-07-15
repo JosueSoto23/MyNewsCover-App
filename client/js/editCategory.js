@@ -1,11 +1,18 @@
 let url_string = window.location.href;
 let url = new URL(url_string);
 let newID = url.searchParams.get("id");
+/**
+ * Variable that gets the sessionstorage
+ */
 let usuario = sessionStorage.getItem("usuarioActivo");
 if(usuario === null){
   window.location.href = "./index.html";
 }
 
+/**
+ * Gets the logged in user and display it in the dropdown
+ * @param {*} id 
+ */
 function getUser(id) {
     let url = "http://localhost:3000/api/users";
     if (id) {
@@ -33,6 +40,10 @@ function getUser(id) {
     ajaxRequest.send();
   }
 
+  /**
+ * Remove the session from the sessionstorage 
+ * and redirect the user to login
+ */
   function removeSession(){
     sessionStorage.removeItem("usuarioActivo");
       window.location.href = "./index.html";
@@ -40,6 +51,10 @@ function getUser(id) {
 
 const error = (e) => console.log(e.target.responseText);
 
+/**
+ * Get the category by ID and display the name in the input
+ * @param {*} id 
+ */
 function get(id) {
     let url = "http://localhost:3000/api/categories";
     if (id) {
@@ -56,6 +71,10 @@ function get(id) {
     ajaxRequest.send();
 }
 
+/**
+ * Edit the categories
+ * @param {*} id 
+ */
 function editCategory(id) {
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("error", error);

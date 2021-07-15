@@ -1,9 +1,15 @@
 const error = (e) => console.log(e.target.responseText);
 
+/** 
+ * Remove the loading screen
+*/
 $(window).load(function () {
     $(".loader").fadeOut("slow");
 });
 
+/**
+ * Get all users
+ */
 function login() {
     let url = "http://localhost:3000/api/users";
     let ajaxRequest = new XMLHttpRequest();
@@ -18,6 +24,10 @@ function login() {
     ajaxRequest.send();
 }
 
+/**
+ * Validate the user's credentials and create a sessionstorage
+ * @param {*} user 
+ */
 function validarCredenciales(user) {
     let email = document.getElementById("username").value;
     let pass = document.getElementById("password").value;
@@ -31,6 +41,11 @@ function validarCredenciales(user) {
     redirecionar(bAcceso);
 }
 
+/**
+ * Redirect user to dashboard if correct credentials are 
+ * entered or display a message if wrong credentials were entered
+ * @param {*} bAcceso 
+ */
 function redirecionar(bAcceso) {
     if (bAcceso == true) {
         window.location.href = "./dashboard.html";
