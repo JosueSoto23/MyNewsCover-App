@@ -18,4 +18,5 @@ function saveCourse() {
         'role': "user"
     };
     const enviar = ajaxRequest.send(JSON.stringify(data));
+    window.location.href = "./index.html";
 }
