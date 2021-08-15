@@ -18,8 +18,7 @@ function saveCourse() {
         'city': document.getElementById('city').value,
         'postalCode': document.getElementById('PostalCode').value,
         'phoneNumber': document.getElementById('Phone').value,
-        'role': "user",
-        'enable': false
+        'role': "user"
     };
     const enviar = ajaxRequest.send(JSON.stringify(data));
     window.location.href = "./index.html";
