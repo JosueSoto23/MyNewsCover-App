@@ -209,119 +209,12 @@ $(window).load(function() {
  * Get news sources by user ID and save news by userID
  * @param {*} id 
  */
-function getNews(id) {
-  let url = "http://localhost:3000/api/newsSources";
-  if (id) {
-    url = `${url}?id=${id}`;
-  }
+function getNews() {
+  let url = "http://localhost:3000/newss";
   const ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("load", (response) => {
-    const newsResponse = JSON.parse(response.target.responseText);
-
-    newsResponse.forEach((sources) => {
-      if(sources.userID === usuario){
-      fetch(`https://cors-anywhere.herokuapp.com/${sources.url}`).then(
-        (response) => {
-          response.text().then((xml) => {
-            let xmlContent = xml;
-            let parser = new DOMParser();
-            let xmlDOM = parser.parseFromString(xmlContent, "application/xml");
-            let news = xmlDOM.querySelectorAll("item");
-            console.log(news);
-
-            news.forEach((item, i) => {
-              if (news.length > 16) {
-                console.log("Voy por aquí, soy El periodico")
-                if (sources.userID === usuario) {
-                  let titulo = item.children[1].innerHTML;
-                  let tituloArreglado = titulo.slice(9, -3);
-
-                  let link = item.children[2].innerHTML;
-                  let linkArreglado = link.slice(9, -3);
-
-                  let fecha = item.children[3].innerHTML;
-
-                  let descripcion = item.children[4].innerHTML;
-                  let descripcionArreglada = descripcion.slice(9, -3);
-
-                  try {
-                    const ajaxRequest = new XMLHttpRequest();
-                    ajaxRequest.addEventListener("error", error);
-                    ajaxRequest.open("POST", "http://localhost:3000/api/news");
-                    ajaxRequest.setRequestHeader(
-                      "Content-Type",
-                      "application/json"
-                    );
-
-                    const data = {
-                      title: tituloArreglado,
-                      short_description: descripcionArreglada,
-                      permanlink: linkArreglado,
-                      date: fecha,
-                      news_source_id: sources._id,
-                      user_id: sources.userID,
-                      category_id: sources.categoryID,
-                    };
-
-                    ajaxRequest.send(JSON.stringify(data));
-
-                    i++;
-
-                    if (i >= 10) {
-                      return;
-                    }
-                  } catch (e) {
-                    console.log("Error al guardar la noticia", e);
-                  }
-                }
-              } else {
-                console.log("Voy por aquí, soy CrHoy")
-                let tituloArreglado = item.children[0].innerHTML;
-                  //let tituloArreglado = titulo.slice(9, -3);
-
-                  let linkArreglado = item.children[1].innerHTML;
-                  //let linkArreglado = link.slice(9, -3);
-
-                  let fecha = item.children[3].innerHTML;
-
-                  let descripcionArreglada = item.children[10].textContent;
-                  //let descripcionArreglada = descripcion.slice(9, -3);
-                try {
-                  const ajaxRequest = new XMLHttpRequest();
-                  ajaxRequest.addEventListener("error", error);
-                  ajaxRequest.open("POST", "http://localhost:3000/api/news");
-                  ajaxRequest.setRequestHeader(
-                    "Content-Type",
-                    "application/json"
-                  );
-
-                  const data = {
-                    title: tituloArreglado,
-                    short_description: descripcionArreglada,
-                    permanlink: linkArreglado,
-                    date: fecha,
-                    news_source_id: sources._id,
-                    user_id: sources.userID,
-                    category_id: sources.categoryID,
-                  };
-
-                  ajaxRequest.send(JSON.stringify(data));
-
-                  i++;
-
-                  if (i >= 10) {
-                    return;
-                  }
-                } catch (e) {
-                  console.log("Error al guardar la noticia", e);
-                }
-              }
-            });
-          });
-        }
-      );
-    }
-    });
+    const taskResponse = JSON.parse(response.target.responseText);
+    
   });
   ajaxRequest.addEventListener("error", error);
   ajaxRequest.open("GET", url);
