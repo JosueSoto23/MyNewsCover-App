@@ -84,15 +84,53 @@ function getCategories(id) {
 }
 
 /**
+ * Render categories into buttons
+ * @param {*} Categories 
+ */
+ function renderTags(Tags) {
+  let html = `<div id = "tags">`;
+  Tags.forEach((tags) => {
+    html += `<button type='button' class='btn btn-outline-primary' href="" onclick="">${tags.name}</button>`;
+  });
+  html += "</div>";
+  document.getElementById("tags").innerHTML = html;
+}
+
+/**
+ * Get all categories
+ * @param {*} id 
+ */
+ function getTags(id) {
+  let url = "http://localhost:3000/api/tags";
+  if (id) {
+    url = `${url}?id=${id}`;
+  }
+  const ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("load", (response) => {
+    const taskResponse = JSON.parse(response.target.responseText);
+    if (id) {
+      renderTags(taskResponse);
+    } else {
+      
+    }
+  });
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("GET", url);
+  ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.send();
+}
+
+/**
  * Get the news of the logged-in user and filter 
  * the news by the ID of the categories
  * @param {*} filter 
  */
 function getNews(filter) {
-  let url = "http://localhost:3000/api/news";
+  let url = "http://localhost:4000/graphql";
   let ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("load", (response) => {
-    const News = JSON.parse(response.target.responseText);
+    const news = JSON.parse(response.target.responseText);
+    let News = news.data.news;
     redireccionar(News);
     let urls = "http://localhost:3000/api/categories";
     const ajaxRequest1 = new XMLHttpRequest();
@@ -166,9 +204,21 @@ function getNews(filter) {
     ajaxRequest1.send();
   });
   ajaxRequest.addEventListener("error", error);
-  ajaxRequest.open("GET", url);
-  ajaxRequest.setRequestHeader("Content-Type", "application/json");
-  ajaxRequest.send();
+    ajaxRequest.open("POST", url);
+    ajaxRequest.setRequestHeader("Content-Type", "application/json");
+    ajaxRequest.send(JSON.stringify({
+        query: `{
+          news{
+            title
+            short_description
+            permanlink
+            date
+            news_source_id
+            user_id
+            category_id
+          }
+        }`
+      }));
 }
 
 /**
@@ -200,3 +250,4 @@ function redi(bAcceso) {
 getNews("portada");
 get(usuario);
 getCategories();
+getTags(usuario);
