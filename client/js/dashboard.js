@@ -120,13 +120,40 @@ function getCategories(id) {
   ajaxRequest.send();
 }
 
+function searchNews(){
+  let url = `http://localhost:4000/graphql`;
+  let ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("load", (response) => {
+    const news = JSON.parse(response.target.responseText);
+    let News = news.data.news;
+    redireccionar(News);
+    
+  });
+  ajaxRequest.addEventListener("error", error);
+    ajaxRequest.open("POST", url);
+    ajaxRequest.setRequestHeader("Content-Type", "application/json");
+    ajaxRequest.send(JSON.stringify({
+        query: `{
+          news(user_id: "${usuario}", ){
+            title
+            short_description
+            permanlink
+            date
+            news_source_id
+            user_id
+            category_id
+          }
+        }`
+      }));
+}
+
 /**
  * Get the news of the logged-in user and filter 
  * the news by the ID of the categories
  * @param {*} filter 
  */
 function getNews(filter) {
-  let url = "http://localhost:4000/graphql";
+  let url = `http://localhost:4000/graphql`;
   let ajaxRequest = new XMLHttpRequest();
   ajaxRequest.addEventListener("load", (response) => {
     const news = JSON.parse(response.target.responseText);
@@ -139,7 +166,6 @@ function getNews(filter) {
       let html = `<div class="row row-cols-1 row-cols-md-3 g-4">`;
       News.forEach((news) => {
         categories.forEach((category) => {
-          if (news.user_id === usuario) {
             if (news.category_id === category._id) {
               if (news.category_id === filter) {
                 html += `<div class="col">
@@ -191,8 +217,6 @@ function getNews(filter) {
               </div>`;
               }
             }
-          } else {
-          }
         });
       });
       html += `</div>`;
@@ -208,7 +232,7 @@ function getNews(filter) {
     ajaxRequest.setRequestHeader("Content-Type", "application/json");
     ajaxRequest.send(JSON.stringify({
         query: `{
-          news{
+          news(user_id: "${usuario}"){
             title
             short_description
             permanlink
