@@ -198,6 +198,14 @@ function deleteNews(id) {
   console.log("Removing News...")
 }
 
+function deleteTags(id) {
+  const ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("DELETE", `http://localhost:3000/api/tags?user_id=${id}`);
+  ajaxRequest.send();
+  console.log("Removing Tags...")
+}
+
 /** 
  * Remove the loading screen
 */
