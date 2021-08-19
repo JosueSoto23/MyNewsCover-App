@@ -90,7 +90,7 @@ function getCategories(id) {
  function renderTags(Tags) {
   let html = `<div id = "tags">`;
   Tags.forEach((tags) => {
-    html += `<button type='button' class='btn btn-outline-primary' href="" onclick="">${tags.name}</button>`;
+    html += `<button type='button' class='btn btn-outline-primary' href="" onclick="tagsFliter('${tags.name}')">${tags.name}</button>`;
   });
   html += "</div>";
   document.getElementById("tags").innerHTML = html;
@@ -136,6 +136,7 @@ function searchNews(value){
   ajaxRequest.addEventListener("load", (response) => {
     const news = JSON.parse(response.target.responseText);
     let News = news.data.searchNews;
+    console.log(News);
     let urls = "http://localhost:3000/api/categories";
     const ajaxRequest1 = new XMLHttpRequest();
     ajaxRequest1.addEventListener("load", (response) => {
@@ -193,6 +194,77 @@ function searchNews(value){
             news_source_id
             user_id
             category_id
+            tags
+          }
+        }`
+      }));
+}
+
+function tagsFliter(tags){
+  let url = `http://localhost:4000/graphql`;
+  let ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("load", (response) => {
+    const news = JSON.parse(response.target.responseText);
+    let News = news.data.tagsNews;
+    console.log(News);
+    let urls = "http://localhost:3000/api/categories";
+    const ajaxRequest1 = new XMLHttpRequest();
+    ajaxRequest1.addEventListener("load", (response) => {
+      const categories = JSON.parse(response.target.responseText);
+      let html = `<div class="row row-cols-1 row-cols-md-3 g-4">`;
+      News.forEach((news) => {
+        categories.forEach((category) => {
+            if (news.category_id === category._id) {
+                html += `<div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <p class="card-text">${news.date}</p>
+                            </div>
+                            <!--<img class="card-img-top" src="" alt="Card image cap">-->
+                            <div class="card-body">
+                                <h5 class="card-title">${
+                                  news.title
+                                }</title></h5>
+                                <h6 class="card-title">${
+                                  category.nameCategory
+                                }</h6>
+                                <p class="card-text">${news.short_description.slice(
+                                  0,
+                                  500
+                                )}</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="${
+                                  news.permanlink
+                                }" class="card-link">Ver Noticia</a>
+                            </div>
+                            </div>
+                        </div>`;   
+            }
+        });
+      });
+      html += `</div>`;
+      document.getElementById("card-columns").innerHTML = html;
+    });
+    ajaxRequest1.addEventListener("error", error);
+    ajaxRequest1.open("GET", urls);
+    ajaxRequest1.setRequestHeader("Content-Type", "application/json");
+    ajaxRequest1.send();
+  });
+  ajaxRequest.addEventListener("error", error);
+    ajaxRequest.open("POST", url);
+    ajaxRequest.setRequestHeader("Content-Type", "application/json");
+    ajaxRequest.send(JSON.stringify({
+        query: `{
+          tagsNews(user_id: "${usuario}", tags: "${tags}"){
+            title
+            short_description
+            permanlink
+            date
+            news_source_id
+            user_id
+            category_id
+            tags
           }
         }`
       }));
@@ -209,6 +281,7 @@ function getNews(filter) {
   ajaxRequest.addEventListener("load", (response) => {
     const news = JSON.parse(response.target.responseText);
     let News = news.data.news;
+    console.log(News);
     redireccionar(News);
     let urls = "http://localhost:3000/api/categories";
     const ajaxRequest1 = new XMLHttpRequest();
@@ -291,6 +364,7 @@ function getNews(filter) {
             news_source_id
             user_id
             category_id
+            tags
           }
         }`
       }));
