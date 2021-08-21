@@ -4,9 +4,19 @@ const error = (e) => console.log(e.target.responseText);
  * Variable that gets the sessionstorage
  */
 let usuario = sessionStorage.getItem("usuarioActivo");
-if (usuario === null) {
+/*if (usuario === null) {
   window.location.href = "./index.html";
+}*/
+
+function getToken() {
+  const ajaxRequest = new XMLHttpRequest();
+  //ajaxRequest.addEventListener("load", saveToken);
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("POST", "http://localhost:3000/api/posts");
+  ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.setRequestHeader('Authorization', `Bearer ${sessionStorage.getItem('sessionToken')}`);
 }
+getToken();
 
 /**
  * Gets the logged in user and display it in the dropdown
@@ -35,6 +45,7 @@ function get(id) {
   ajaxRequest.addEventListener("error", error);
   ajaxRequest.open("GET", url);
   ajaxRequest.setRequestHeader("Content-Type", "application/json");
+  ajaxRequest.setRequestHeader('Authorization', `Bearer ${sessionStorage.getItem('sessionToken')}`);
   ajaxRequest.send();
 }
 /**
