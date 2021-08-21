@@ -4,9 +4,9 @@ const error = (e) => console.log(e.target.responseText);
  * Variable that gets the sessionstorage
  */
 let usuario = sessionStorage.getItem("usuarioActivo");
-/*if (usuario === null) {
+if (usuario === null) {
   window.location.href = "./index.html";
-}*/
+}
 
 function getToken() {
   const ajaxRequest = new XMLHttpRequest();

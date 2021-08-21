@@ -58,7 +58,7 @@ function validarCredenciales(user) {
     let pass = document.getElementById("password").value;
     var bAcceso = false;
     for (const i of user) {
-        if (email === i.email && pass === i.password) {
+        if (email === i.email && pass === i.password === i.enable === true) {
             bAcceso = true;
             sessionStorage.setItem("usuarioActivo", i._id);
         }
@@ -75,6 +75,19 @@ function redirecionar(bAcceso) {
     if (bAcceso == true) {
         window.location.href = "./dashboard.html";
     } else {
+        sessionStorage.removeItem("sessionToken");
         alert("Sus credenciales son invalidas")
     }
+}
+
+function loginByEmail() {
+    const ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.addEventListener("error", error);
+    ajaxRequest.open("POST", "http://localhost:3000/api/sendMailLogin");
+    ajaxRequest.setRequestHeader("Content-Type", "application/json");
+    const data = {
+        'email': document.getElementById('username').value
+    }
+    ajaxRequest.send(JSON.stringify(data));
+    alert("The email has been sent successfully, please check your email")
 }
