@@ -26,7 +26,7 @@ function loginGet(email) {
  function validarCredenciales(user) {
     var bAcceso = false;
     for (const i of user) {
-        if (email === i.email) {
+        if (email === i.email === i.enable === true) {
             bAcceso = true;
             sessionStorage.setItem("usuarioActivo", i._id);
         }
@@ -44,6 +44,7 @@ function redirecionar(bAcceso) {
         window.location.href = "./dashboard.html";
     } else {
         alert("Sus credenciales son invalidas")
+        window.location.href = "./index.html";
     }
 }
 
