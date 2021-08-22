@@ -27,6 +27,18 @@ function loginGet() {
     ajaxRequest.send();
 }
 
+function sendMessage(phoneNumber) {
+    console.log(phoneNumber)
+    const ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.addEventListener("error", error);
+    ajaxRequest.open("POST", "http://localhost:3000/api/sendMessage");
+    ajaxRequest.setRequestHeader("Content-Type", "application/json");
+    const data = {
+        'phoneNumber': phoneNumber
+    }
+    ajaxRequest.send(JSON.stringify(data));
+}
+
 function login() {
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("load", saveToken);
@@ -59,6 +71,7 @@ function validarCredenciales(user) {
     var bAcceso = false;
     for (const i of user) {
         if (email === i.email && pass === i.password === i.enable === true) {
+            sendMessage(i.phoneNumber);
             bAcceso = true;
             sessionStorage.setItem("usuarioActivo", i._id);
         }
@@ -72,7 +85,8 @@ function validarCredenciales(user) {
  * @param {*} bAcceso 
  */
 function redirecionar(bAcceso) {
-    if (bAcceso == true) {
+    var sign = window.prompt('Enter the code we have sent you')
+    if (bAcceso == true && sign.toLowerCase() == "123") {
         window.location.href = "./dashboard.html";
     } else {
         sessionStorage.removeItem("sessionToken");
