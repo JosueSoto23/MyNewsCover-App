@@ -406,7 +406,13 @@ function redi(bAcceso) {
     window.location.href = "./crudNewsSources.html";
   }
 }
-
+function deletecodes(id) {
+  const ajaxRequest = new XMLHttpRequest();
+  ajaxRequest.addEventListener("error", error);
+  ajaxRequest.open("DELETE", `http://localhost:3000/api/Code?user_id=${id}`);
+  ajaxRequest.send();
+}
+deletecodes(usuario);
 getNews("portada");
 get(usuario);
 getCategories();

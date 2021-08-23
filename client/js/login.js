@@ -27,14 +27,15 @@ function loginGet() {
     ajaxRequest.send();
 }
 
-function sendMessage(phoneNumber) {
+function sendMessage(phoneNumber, user_id) {
     console.log(phoneNumber)
     const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.addEventListener("error", error);
     ajaxRequest.open("POST", "http://localhost:3000/api/sendMessage");
     ajaxRequest.setRequestHeader("Content-Type", "application/json");
     const data = {
-        'phoneNumber': phoneNumber
+        'phoneNumber': phoneNumber,
+        'user_id': user_id
     }
     ajaxRequest.send(JSON.stringify(data));
 }
@@ -70,26 +71,49 @@ function validarCredenciales(user) {
     let pass = document.getElementById("password").value;
     var bAcceso = false;
     for (const i of user) {
-        if (email === i.email && pass === i.password === i.enable === true) {
-            sendMessage(i.phoneNumber);
+        if (email === i.email && pass === i.password && i.enable === true) {
+            sendMessage(i.phoneNumber, i._id);
             bAcceso = true;
             sessionStorage.setItem("usuarioActivo", i._id);
         }
     }
     redirecionar(bAcceso);
 }
+function codeGet(sign, bAcceso) {
+    let email = document.getElementById('username').value;
+    let url = "http://localhost:3000/api/Code";
+    url = `${url}?code=${sign}`;
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.addEventListener("load", (response) => {
+        const userResponse = JSON.parse(response.target.responseText);
+        userResponse.forEach((code) => {
+            if (code.user_id === sessionStorage.getItem("usuarioActivo")) {
+                alert("Hola");
+                if (bAcceso == true) {
+                    window.location.href = "./dashboard.html";
+                } else {
+                    sessionStorage.removeItem("sessionToken");
+                    alert("Sus credenciales son invalidas")
+                }
+            }
+        });
+    });
 
+    ajaxRequest.addEventListener("error", error);
+    ajaxRequest.open("GET", url);
+    ajaxRequest.setRequestHeader("Content-Type", "application/json");
+    ajaxRequest.send();
+}
 /**
  * Redirect user to dashboard if correct credentials are 
  * entered or display a message if wrong credentials were entered
  * @param {*} bAcceso 
  */
 function redirecionar(bAcceso) {
-    var sign = window.prompt('Enter the code we have sent you')
-    if (bAcceso == true && sign.toLowerCase() == "123") {
-        window.location.href = "./dashboard.html";
-    } else {
-        sessionStorage.removeItem("sessionToken");
+    if(bAcceso === true){
+        var sign = window.prompt('Enter the code we have sent you')
+        codeGet(sign, bAcceso);
+    }else{
         alert("Sus credenciales son invalidas")
     }
 }
